@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  labels:
+    app.openshift.io/runtime: quarkus
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - image: image
+          name: proxy
+          imagePullPolicy: Always
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: proxy-cm
+                  key: VERSION
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10  
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi  
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
