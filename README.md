@@ -67,7 +67,7 @@ source-code
 
 ## How to deal with the mesh and deploy again your backend
 
- - Create a project called <name-surname>-mesh
+ - Create a project called < your project >-mesh
  - Inside that project, create an instance of a service mesh
  - Add your project <name-surname> to the mesh
  - Create the gateway in your project
