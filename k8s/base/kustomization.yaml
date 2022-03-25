@@ -1,14 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-nameSuffix: -v1
+nameSuffix: -v2
 generatorOptions:
   disableNameSuffixHash: true
 configMapGenerator:
 - name: proxy-cm
   literals:
-    - VERSION="v1"
+    - VERSION="v2"
 commonLabels:
   app: proxy
-  version: v1
+  version: v2
 resources:
   - deployment.yaml
