@@ -70,6 +70,11 @@ source-code
  - Create a project called < your project >-mesh
  - Inside that project, create an instance of a service mesh
  - Add your project <name-surname> to the mesh
+ - Annotate your deployments with the following
+```
+annotations:
+  sidecar.istio.io/inject: "true"
+ ```
  - Create the gateway in your project
 
 ```
